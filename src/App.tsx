@@ -22,7 +22,11 @@ function createBoard() {
   for (let i = 0; i < 40; i++) {
     board[i] = [];
     for (let j = 0; j < 40; j++) {
-      board[i][j] = false;
+      if (Math.random() < 0.5) {
+        board[i][j] = false;
+      } else {
+        board[i][j] = true;
+      }
     }
   }
   return board;
@@ -95,14 +99,15 @@ function iterateBoard(board: any) {
         newboard[i][j] = true;
       }
 
-      // live cell with more than 3 dies
-      if (board[i][j] && neighborCount(i, j, board) > 3) {
-        newboard[i][j] = false;
-      }
-
       // dead cell with more than 3 lives
       if (!board[i][j] && neighborCount(i, j, board) > 3) {
         newboard[i][j] = true;
+      }
+
+      // live cell with more than 3 dies
+      if (board[i][j] && neighborCount(i, j, board) > 3) {
+        newboard[i][j] = false;
+        console.log("die");
       }
     }
   }
