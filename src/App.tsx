@@ -28,18 +28,59 @@ function createBoard() {
   return board;
 }
 
-function neighborCount(i: any, j: any, board: any) {}
+function neighborCount(i: any, j: any, board: any) {
+  let count = 0;
+
+  try {
+    if (board[i - 1][j] === true) {
+      count++;
+    }
+  } catch (error) {}
+  try {
+    if (board[i + 1][j] === true) {
+      count++;
+    }
+  } catch (error) {}
+  try {
+    if (board[i][j - 1] === true) {
+      count++;
+    }
+  } catch (error) {}
+  try {
+    if (board[i][j + 1] === true) {
+      count++;
+    }
+  } catch (error) {}
+  try {
+    if (board[i - 1][j - 1] === true) {
+      count++;
+    }
+  } catch (error) {}
+  try {
+    if (board[i - 1][j + 1] === true) {
+      count++;
+    }
+  } catch (error) {}
+  try {
+    if (board[i + 1][j - 1] === true) {
+      count++;
+    }
+  } catch (error) {}
+  try {
+    if (board[i + 1][j + 1] === true) {
+      count++;
+    }
+  } catch (error) {}
+
+  return count;
+}
 
 function iterateBoard(board: any) {
   console.log("iterating");
 
   for (let i = 0; i < 40; i++) {
     for (let j = 0; j < 40; j++) {
-      if (board[i][j] === false) {
-        continue;
-      } else {
-        console.log("found a true");
-      }
+      console.log(`${i} ${j} ${neighborCount(i, j, board)}`);
     }
   }
 
@@ -60,8 +101,8 @@ function App() {
     <Container>
       <h1>Game of Life</h1>
       <GameContainer>
-        {board.map((row: any, indexi: any) =>
-          row.map((col: any, indexj: any) => (
+        {board.map((row: any, indexi: number) =>
+          row.map((col: any, indexj: number) => (
             <Tile
               key={uuid()}
               alive={col}
