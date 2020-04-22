@@ -10,8 +10,8 @@ const Container = styled.div`
 `;
 
 const GameContainer = styled.div`
-  width: 800px;
-  height: 800px;
+  width: 880px;
+  height: 880px;
   display: flex;
   flex-wrap: wrap;
 `;
@@ -78,19 +78,46 @@ function neighborCount(i: any, j: any, board: any) {
 function iterateBoard(board: any) {
   console.log("iterating");
 
+  let newboard = board;
+
   for (let i = 0; i < 40; i++) {
     for (let j = 0; j < 40; j++) {
-      console.log(`${i} ${j} ${neighborCount(i, j, board)}`);
+      // live cell with fewer than two neighbors dies
+      if (board[i][j] && neighborCount(i, j, board) < 2) {
+        newboard[i][j] = false;
+      }
+
+      // live cell with two or three lives on
+      if (
+        (board[i][j] && neighborCount(i, j, board) === 2) ||
+        neighborCount(i, j, board) === 3
+      ) {
+        newboard[i][j] = true;
+      }
+
+      // live cell with more than 3 dies
+      if (board[i][j] && neighborCount(i, j, board) > 3) {
+        newboard[i][j] = false;
+      }
+
+      // dead cell with more than 3 lives
+      if (!board[i][j] && neighborCount(i, j, board) > 3) {
+        newboard[i][j] = true;
+      }
     }
   }
 
-  return board;
+  console.log(newboard);
+
+  return newboard;
 }
 
 function TogglePiece(i: any, j: any, board: any) {
   let newboard = board;
 
   newboard[i][j] = !newboard[i][j];
+
+  console.log(newboard);
   return newboard;
 }
 
