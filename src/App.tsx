@@ -107,17 +107,12 @@ function iterateBoard(board: any) {
     }
   }
 
-  console.log(newboard);
-
   return newboard;
 }
 
 function TogglePiece(i: any, j: any, board: any) {
   let newboard = board;
-
   newboard[i][j] = !newboard[i][j];
-
-  console.log(newboard);
   return newboard;
 }
 
@@ -134,7 +129,7 @@ function App() {
               key={uuid()}
               alive={col}
               onClick={() => {
-                setboard(TogglePiece(indexi, indexj, board));
+                setboard([...TogglePiece(indexi, indexj, board)]);
               }}
             ></Tile>
           ))
@@ -142,7 +137,8 @@ function App() {
       </GameContainer>
       <button
         onClick={() => {
-          setboard(iterateBoard(board));
+          setboard([...iterateBoard(board)]);
+          console.log(board);
         }}
       >
         Iterate Board
