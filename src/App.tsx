@@ -10,8 +10,8 @@ const Container = styled.div`
 `;
 
 const GameContainer = styled.div`
-  width: 880px;
-  height: 880px;
+  width: 800px;
+  height: 800px;
   display: flex;
   flex-wrap: wrap;
 `;
@@ -80,8 +80,6 @@ function neighborCount(i: any, j: any, board: any) {
 }
 
 function iterateBoard(board: any) {
-  console.log("iterating");
-
   let newboard = board;
 
   for (let i = 0; i < 40; i++) {
@@ -107,7 +105,6 @@ function iterateBoard(board: any) {
       // live cell with more than 3 dies
       if (board[i][j] && neighborCount(i, j, board) > 3) {
         newboard[i][j] = false;
-        console.log("die");
       }
     }
   }
@@ -123,6 +120,12 @@ function TogglePiece(i: any, j: any, board: any) {
 
 function App() {
   const [board, setboard] = useState(createBoard());
+
+  useEffect(() => {
+    setTimeout(() => {
+      setboard([...iterateBoard(board)]);
+    }, 1000);
+  }, [board]);
 
   return (
     <Container>
@@ -140,14 +143,6 @@ function App() {
           ))
         )}
       </GameContainer>
-      <button
-        onClick={() => {
-          setboard([...iterateBoard(board)]);
-          console.log(board);
-        }}
-      >
-        Iterate Board
-      </button>
     </Container>
   );
 }
